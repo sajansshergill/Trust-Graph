@@ -1,0 +1,51 @@
+from __future__ import annotations
+
+import pandas as pd
+
+def minmax(series: pd.Series) -> pd.Series:
+    s = series.astype(float)
+    lo, hi = s.min(), s.max()
+    if hi == lo:
+        return (s-lo) / (hi-lo)
+    
+def build_business_risk_table(
+    burst_df: pd.DataFrame,
+    skew_df: pd.DataFrame,
+    overlap_df: pd.DataFrame,
+    w_burst: float = 0.35,
+    w_overlap: float = 0.30,
+    w_skew: float = 0.20,
+    w_density: float = 0.15,
+    density_df: pd.DataFrame | None = None,
+) -> pd.DataFrame:
+    """
+    density_df optional: columns [business_id, density_score]
+    If not provided, density_score = 0.
+    """
+    base = burst_df.merge(skew_df, on="business_id", how="outer") \
+        .merge(overlap_df, on="business_id", how="outer")
+    
+    if density_df is None:
+        base["density_score"] = 0.0
+    else:
+        base = base.merge(density_df, on="business_id", how="left")
+        base["density_score"] = base["density_score"].fillna(0.0)
+        
+    # fill numeric nulls
+    for c in ["burst_score", "rating_skew", "frac_heavy_reviewers", "density_score", "n_reviews", "n_unique_revieweers"]:
+        if c in base.columns:
+            base[c] = base[c].fillna(0.0)
+            
+    base["burst_n"] = minmax(base["burst_score"])
+    base["overlap_n"] = minmax(base["frac_heavy_reviewers"])
+    base["skew_n"] = minmax(base["rating_skew"])
+    base["density_n"] = minmax(base["density_score"])
+    
+    base["risk_score"] = (
+        w_burst * base["burst_n"]
+        + w_overlap * base["overlap_n"]
+        + w_skew * base["skew_n"]
+        + w_density * base["density_n"]
+    )
+    
+    return base.sort_values("risk_score", ascending=False).reset_index(drop=True)
