@@ -129,8 +129,11 @@ Graph-based detection is effective in both domains.
 
 # 🚀 How to Run
 git clone https://github.com/yourusername/trustgraph
+
 cd trustgraph
+
 pip install -r requirements.txt
+
 jupyter notebook
 
 Run notebooks in order:
