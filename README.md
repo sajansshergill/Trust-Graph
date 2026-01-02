@@ -154,7 +154,7 @@ Run notebooks in order:
 - Integrity enforcement is a product decision, not just a modeling task
 - The same ideas power both **marketplace trust** and **ads fraud defense**
 
-🔮 Future Improvements
+# 🔮 Future Improvements
 - Weakly-supervised ML risk model
 - NLP similarity using review embeddings
 - Online detection for near-real-time abuse
