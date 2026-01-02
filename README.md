@@ -136,10 +136,16 @@ pip install -r requirements.txt
 
 jupyter notebook
 
+--
+
 Run notebooks in order:
+
 01_data_loading.ipynb
+
 02_graph_construction.ipynb
+
 03_integrity_signals.ipynb
+
 04_risk_scoring.ipynb
 
 # 📌 Key Takeaways
