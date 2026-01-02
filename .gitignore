@@ -1,0 +1,13 @@
+# Yelp raw datasets (VERY LARGE - do not commit)
+data/yelp_academic_dataset_review.json
+data/yelp_academic_dataset_user.json
+data/yelp_academic_dataset_business.json
+
+# Notebook artifacts
+.ipynb_checkpoints/
+
+# Outputs
+outputs/
+
+# OS files
+.DS_Store
