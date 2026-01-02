@@ -3,7 +3,7 @@ from __future__ import annotations
 import numpy as np
 import pandas as pd
 
-def business_burst_score(reviews: pd.DataFrame, window_days: int = 14) -> DataFrame:
+def business_burst_score(reviews: pd.DataFrame, window_days: int = 14) -> pd.DataFrame:
     """
     BurstScore = (reviews in last window / window_days) / (overall avg reviews per day)
     Computed per business.
